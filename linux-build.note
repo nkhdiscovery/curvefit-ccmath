@@ -1,1 +1,1 @@
-g++  `pkg-config --cflags opencv` -o out.out nkh.cpp GraphUtils.cpp `pkg-config --libs opencv` -I.
+g++  `pkg-config --cflags opencv` -o out.out test-main.cpp GraphUtils.cpp `pkg-config --libs opencv` -I.
