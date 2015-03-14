@@ -7,7 +7,7 @@
 
 
 //#define TEST_SIZE 200
-#define TIME_STAMP 1 //just for graphing
+#define TIME_STAMP 2 //just for graphing
 //#define POLY_DEGREE 4
 #define cosd(x) (cos(fmod((x),360) * M_PI / 180))
 double f(double x, double* coefficients, int degree)
@@ -43,13 +43,12 @@ int main()
         fittedPoints[i] = f(i, coefficients, POLY_DEGREE);
     }
 
-
-    IplImage *graphImg = drawFloatGraph(fittedPoints, TEST_SIZE, NULL,
-                -2,2, (TIME_STAMP*TEST_SIZE), 680, "X Angle" ); //main graph image
-    drawFloatGraph(dataArray, TEST_SIZE , graphImg, -2,2, (TIME_STAMP*TEST_SIZE), 680);
     char graphLabel[128]; 
-    sprintf(graphLabel, "Fit with degree %d, squared residual is %f\n", POLY_DEGREE, sq);
-    showImage(graphImg, 0, graphLabel);
+    sprintf(graphLabel, "Fit with degree %d, squared residual is %f", POLY_DEGREE, sq);
+    IplImage *graphImg = drawFloatGraph(fittedPoints, TEST_SIZE, NULL,
+                -2,2, (TIME_STAMP*TEST_SIZE), 680, graphLabel ); //main graph image
+    drawFloatGraph(dataArray, TEST_SIZE , graphImg, -2,2, (TIME_STAMP*TEST_SIZE), 680);
+    showImage(graphImg, 0, "Fitted Curve");
 
     return 0 ; 
 }
