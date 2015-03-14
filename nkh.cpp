@@ -7,29 +7,43 @@
 
 
 #define TEST_SIZE 700
-#define TIME_STAMP 1
+#define TIME_STAMP 1 //just for graphing
+#define POLY_DEGREE 4
 #define cosd(x) (cos(fmod((x),360) * M_PI / 180))
+double f(double x, double* coefficients, int degree)
+{
+    double y = 0; 
+    for(int i = 0 ; i < degree ; i++)
+    {
+        y += coefficients[i] * pow(x,i);
+    }
+    return y;
+}
 
 int main()
 {
     srand(time(NULL));
-    float *floatArray = new float[TEST_SIZE];
-    float predictedPoints[TEST_SIZE+100] = {0};
-    for(int i=0 ; i<TEST_SIZE ; i++) 
+
+    double dataArray[TEST_SIZE] = {0}; //Real points we wanna fit into
+    double time[TEST_SIZE] = {0};
+    double fittedPoints[TEST_SIZE] = {0}; //Fitted points, just for graphing
+    double coefficients[4] = {0}; //These will be the calculated coefficients
+    for(int i=0 ; i < TEST_SIZE ; i++) //Some samples... 
     {
-        floatArray[i] = cosd(i) + 0.3*( ((rand() % 10)/10.0) -0.1);
+        dataArray[i] = cosd(i) + 0.3*( ((rand() % 10) / 10.0) -0.1);
+        time[i] = i;
     }
-    for(int i=0 ; i<100 ; i++)
+    double sq = pplsq(time, dataArray, TEST_SIZE, coefficients, POLY_DEGREE); //fit and return squared residual
+    for(int i=0 ; i < TEST_SIZE ; i++)
     {
-        predictedPoints[TEST_SIZE+i] = cosd(TEST_SIZE+i);
+        fittedPoints[i] = f(i, coefficients, POLY_DEGREE);
     }
 
-    IplImage *graphImg = drawFloatGraph(predictedPoints, TEST_SIZE+100, NULL,
-                -2,2, TIME_STAMP*(TEST_SIZE+100) ,680, "X Angle" );
 
-    drawFloatGraph(floatArray, TEST_SIZE , graphImg, -2,2, (TIME_STAMP*TEST_SIZE),680);
-    showImage(graphImg, 0, "sample graph");
+    IplImage *graphImg = drawFloatGraph(fittedPoints, TEST_SIZE+100, NULL,
+                -2,2, (TIME_STAMP*TEST_SIZE), 680, "X Angle" ); //main graph image
+    drawFloatGraph(dataArray, TEST_SIZE , graphImg, -2,2, (TIME_STAMP*TEST_SIZE), 680);
+    showImage(graphImg, 0, "Fit with degree %d, squared residual is %f\n", POLY_DEGREE, sq);
 
-//    showFloatGraph("Rotation Angle", floatArray, TEST_SIZE, 0);
     return 0 ; 
 }
