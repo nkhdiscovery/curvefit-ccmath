@@ -12,10 +12,13 @@
 #define cosd(x) (cos(fmod((x),360) * M_PI / 180))
 double f(double x, double* coefficients, int degree)
 {
-    double y = 0; 
-    for(int i = 0 ; i < degree ; i++)
+    double *pows = new double[degree];
+    pows[0] = 1;
+    double y = coefficients[0];
+    for(int i = 1 ; i < degree ; i++)
     {
-        y += coefficients[i] * pow(x,i);
+        pows[i] = x * pows[i-1];
+        y += coefficients[i] * pows[i];
     }
     return y;
 }
