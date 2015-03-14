@@ -72,9 +72,9 @@ void setCustomGraphColor(int R, int B, int G)
 	usingCustomGraphColor = 1;	// show that it will be used.
 }
 
-// Draw the graph of an array of floats into imageDst or a new image, between minV & maxV if given.
+// Draw the graph of an array of doubles into imageDst or a new image, between minV & maxV if given.
 // Remember to free the newly created image if imageDst is not given.
-IplImage* drawFloatGraph(const float *arraySrc, int nArrayLength, IplImage *imageDst, float minV, float maxV, int width, int height, char *graphLabel, bool showScale)
+IplImage* drawFloatGraph(const double *arraySrc, int nArrayLength, IplImage *imageDst, double minV, double maxV, int width, int height, char *graphLabel, bool showScale)
 {
 	int w = width;
 	int h = height;
@@ -85,9 +85,9 @@ IplImage* drawFloatGraph(const float *arraySrc, int nArrayLength, IplImage *imag
 		h = 220;
 
 	int s = h - b*2;// size of graph height
-	float xscale = 1.0;
+	double xscale = 1.0;
 	if (nArrayLength > 1)
-		xscale = (w - b*2) / (float)(nArrayLength-1);	// horizontal scale
+		xscale = (w - b*2) / (double)(nArrayLength-1);	// horizontal scale
 	IplImage *imageGraph;	// output image
 
 	// Get the desired image to draw into.
@@ -111,17 +111,17 @@ IplImage* drawFloatGraph(const float *arraySrc, int nArrayLength, IplImage *imag
 	// If the user didnt supply min & mav values, find them from the data, so we can draw it at full scale.
 	if (fabs(minV) < 0.0000001f && fabs(maxV) < 0.0000001f) {
 		for (int i=0; i<nArrayLength; i++) {
-			float v = (float)arraySrc[i];
+			double v = (double)arraySrc[i];
 			if (v < minV)
 				minV = v;
 			if (v > maxV)
 				maxV = v;
 		}
 	}
-	float diffV = maxV - minV;
+	double diffV = maxV - minV;
 	if (diffV == 0)
 		diffV = 0.00000001f;	// Stop a divide-by-zero error
-	float fscale = (float)s / diffV;
+	double fscale = (double)s / diffV;
 
 	// Draw the horizontal & vertical axis
 	int y0 = cvRound(minV*fscale);
@@ -174,9 +174,9 @@ IplImage* drawIntGraph(const int *arraySrc, int nArrayLength, IplImage *imageDst
 		h = 220;
 
 	int s = h - b*2;// size of graph height
-	float xscale = 1.0;
+	double xscale = 1.0;
 	if (nArrayLength > 1)
-		xscale = (w - b*2) / (float)(nArrayLength-1);	// horizontal scale
+		xscale = (w - b*2) / (double)(nArrayLength-1);	// horizontal scale
 	IplImage *imageGraph;	// output image
 
 	// Get the desired image to draw into.
@@ -210,7 +210,7 @@ IplImage* drawIntGraph(const int *arraySrc, int nArrayLength, IplImage *imageDst
 	int diffV = maxV - minV;
 	if (diffV == 0)
 		diffV = 1;	// Stop a divide-by-zero error
-	float fscale = (float)s / (float)diffV;
+	double fscale = (double)s / (double)diffV;
 
 	// Draw the horizontal & vertical axis
 	int y0 = cvRound(minV*fscale);
@@ -263,9 +263,9 @@ IplImage* drawUCharGraph(const uchar *arraySrc, int nArrayLength, IplImage *imag
 		h = 220;
 
 	int s = h - b*2;// size of graph height
-	float xscale = 1.0;
+	double xscale = 1.0;
 	if (nArrayLength > 1)
-		xscale = (w - b*2) / (float)(nArrayLength-1);	// horizontal scale
+		xscale = (w - b*2) / (double)(nArrayLength-1);	// horizontal scale
 	IplImage *imageGraph;	// output image
 
 	// Get the desired image to draw into.
@@ -299,7 +299,7 @@ IplImage* drawUCharGraph(const uchar *arraySrc, int nArrayLength, IplImage *imag
 	int diffV = maxV - minV;
 	if (diffV == 0)
 		diffV = 1;	// Stop a divide-by-zero error
-	float fscale = (float)s / (float)diffV;
+	double fscale = (double)s / (double)diffV;
 
 	// Draw the horizontal & vertical axis
 	int y0 = cvRound(minV*fscale);
@@ -339,10 +339,10 @@ IplImage* drawUCharGraph(const uchar *arraySrc, int nArrayLength, IplImage *imag
 	return imageGraph;
 }
 
-// Display a graph of the given float array.
+// Display a graph of the given double array.
 // If background is provided, it will be drawn into, for combining multiple graphs using drawFloatGraph().
 // Set delay_ms to 0 if you want to wait forever until a keypress, or set it to 1 if you want it to delay just 1 millisecond.
-void showFloatGraph(const char *name, const float *arraySrc, int nArrayLength, int delay_ms, IplImage *background)
+void showFloatGraph(const char *name, const double *arraySrc, int nArrayLength, int delay_ms, IplImage *background)
 {
 #ifdef USE_HIGHGUI
 	// Draw the graph

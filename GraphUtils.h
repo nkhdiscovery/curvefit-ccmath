@@ -29,9 +29,9 @@ extern "C"
 // Graphing functions
 //------------------------------------------------------------------------------
 
-// Draw the graph of an array of floats into imageDst or a new image, between minV & maxV if given.
+// Draw the graph of an array of doubles into imageDst or a new image, between minV & maxV if given.
 // Remember to free the newly created image if imageDst is not given.
-IplImage* drawFloatGraph(const float *arraySrc, int nArrayLength, IplImage *imageDst DEFAULT(0), float minV DEFAULT(0.0), float maxV DEFAULT(0.0), int width DEFAULT(0), int height DEFAULT(0), char *graphLabel DEFAULT(0), bool showScale DEFAULT(true));
+IplImage* drawFloatGraph(const double *arraySrc, int nArrayLength, IplImage *imageDst DEFAULT(0), double minV DEFAULT(0.0), double maxV DEFAULT(0.0), int width DEFAULT(0), int height DEFAULT(0), char *graphLabel DEFAULT(0), bool showScale DEFAULT(true));
 
 // Draw the graph of an array of ints into imageDst or a new image, between minV & maxV if given.
 // Remember to free the newly created image if imageDst is not given.
@@ -41,10 +41,10 @@ IplImage* drawIntGraph(const int *arraySrc, int nArrayLength, IplImage *imageDst
 // Remember to free the newly created image if imageDst is not given.
 IplImage* drawUCharGraph(const uchar *arraySrc, int nArrayLength, IplImage *imageDst DEFAULT(0), int minV DEFAULT(0), int maxV DEFAULT(0), int width DEFAULT(0), int height DEFAULT(0), char *graphLabel DEFAULT(0), bool showScale DEFAULT(true));
 
-// Display a graph of the given float array.
+// Display a graph of the given double array.
 // If background is provided, it will be drawn into, for combining multiple graphs using drawFloatGraph().
 // Set delay_ms to 0 if you want to wait forever until a keypress, or set it to 1 if you want it to delay just 1 millisecond.
-void showFloatGraph(const char *name, const float *arraySrc, int nArrayLength, int delay_ms DEFAULT(500), IplImage *background DEFAULT(0));
+void showFloatGraph(const char *name, const double *arraySrc, int nArrayLength, int delay_ms DEFAULT(500), IplImage *background DEFAULT(0));
 
 // Display a graph of the given int array.
 // If background is provided, it will be drawn into, for combining multiple graphs using drawIntGraph().
